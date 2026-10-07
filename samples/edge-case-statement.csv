@@ -1,0 +1,349 @@
+Statement,Header,Field Name,Field Value
+Statement,Data,BrokerName,Synthetic Demo Data
+Statement,Data,Title,Activity Statement
+Statement,Data,Period,"January 9999, 9999 - May 9999, 9999"
+Statement,Data,WhenGenerated,"9999-9999-9999, 9999:9999:9999 EDT"
+Account Information,Header,Field Name,Field Value
+Account Information,Data,Name,Sample User
+Account Information,Data,Account,U9999
+Account Information,Data,Account Type,Individual
+Account Information,Data,Customer Type,Individual
+Account Information,Data,Account Capabilities,Cash
+Account Information,Data,Base Currency,USD
+Net Asset Value,Header,Asset Class,Prior Total,Current Long,Current Short,Current Total,Change
+Net Asset Value,Data,Cash ,9999,9999,9999,9999,9999
+Net Asset Value,Data,Stock,9999,9999,9999,9999,9999
+Net Asset Value,Data,Total,9999,9999,9999,9999,9999
+Net Asset Value,Header,Time Weighted Rate of Return
+Net Asset Value,Data,9999
+Change in NAV,Header,Field Name,Field Value
+Change in NAV,Data,Starting Value,9999
+Change in NAV,Data,Mark-to-Market,9999
+Change in NAV,Data,Deposits & Withdrawals,9999
+Change in NAV,Data,Grant Activity,9999
+Change in NAV,Data,Dividends,9999
+Change in NAV,Data,Withholding Tax,9999
+Change in NAV,Data,Interest,9999
+Change in NAV,Data,Other Fees,9999
+Change in NAV,Data,Commissions,9999
+Change in NAV,Data,Ending Value,9999
+Mark-to-Market Performance Summary,Header,Asset Category,Symbol,Prior Quantity,Current Quantity,Prior Price,Current Price,Mark-to-Market P/L Position,Mark-to-Market P/L Transaction,Mark-to-Market P/L Commissions,Mark-to-Market P/L Other,Mark-to-Market P/L Total,Code
+Mark-to-Market Performance Summary,Data,Stocks,AVGO,9999,9999,9999,--,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,BABA,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,COST,9999,9999,9999,--,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,CRCL,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,DEMO,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,INTU,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,MSFT,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,NFLX,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,NVDA,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,ORCL,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,SGOV,9999,9999,9999,--,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,TEM,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Stocks,UBER,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Total,,,,,,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Forex,HKD,9999,9999,--,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Forex,USD,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Total,,,,,,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Total (All Assets),,,,,,9999,9999,9999,9999,9999,
+Mark-to-Market Performance Summary,Data,Broker Interest Paid and Received,,,,,,,,,,9999,
+Mark-to-Market Performance Summary,Data,Other Fees,,,,,,,,,,9999,
+Total P/L for Statement Period,,,,,,,,,,,,9999,
+Realized & Unrealized Performance Summary,Header,Asset Category,Symbol,Cost Adj.,Realized S/T Profit,Realized S/T Loss,Realized L/T Profit,Realized L/T Loss,Realized Total,Unrealized S/T Profit,Unrealized S/T Loss,Unrealized L/T Profit,Unrealized L/T Loss,Unrealized Total,Total,Code
+Realized & Unrealized Performance Summary,Data,Stocks,AVGO,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,BABA,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,COST,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,CRCL,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,DEMO,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,INTU,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,MSFT,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,NFLX,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,NVDA,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,ORCL,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,SGOV,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,TEM,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Stocks,UBER,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Total,,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Forex,HKD,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Total,,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Realized & Unrealized Performance Summary,Data,Total (All Assets),,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,9999,
+Cash Report,Header,Currency Summary,Currency,Total,Securities,Futures,
+Cash Report,Data,Starting Cash,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Commissions,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Deposits,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Dividends,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Broker Interest Paid and Received,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Trades (Sales),Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Trades (Purchase),Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Other Fees,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Payment In Lieu of Dividends,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Withholding Tax,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Cash FX Translation Gain/Loss,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Ending Cash,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Ending Settled Cash,Base Currency Summary,9999,9999,9999,
+Cash Report,Data,Starting Cash,HKD,9999,9999,9999,
+Cash Report,Data,Deposits,HKD,9999,9999,9999,
+Cash Report,Data,Trades (Purchase),HKD,9999,9999,9999,
+Cash Report,Data,Ending Cash,HKD,9999,9999,9999,
+Cash Report,Data,Ending Settled Cash,HKD,9999,9999,9999,
+Cash Report,Data,Starting Cash,USD,9999,9999,9999,
+Cash Report,Data,Commissions,USD,9999,9999,9999,
+Cash Report,Data,Deposits,USD,9999,9999,9999,
+Cash Report,Data,Dividends,USD,9999,9999,9999,
+Cash Report,Data,Broker Interest Paid and Received,USD,9999,9999,9999,
+Cash Report,Data,Trades (Sales),USD,9999,9999,9999,
+Cash Report,Data,Trades (Purchase),USD,9999,9999,9999,
+Cash Report,Data,Other Fees,USD,9999,9999,9999,
+Cash Report,Data,Payment In Lieu of Dividends,USD,9999,9999,9999,
+Cash Report,Data,Withholding Tax,USD,9999,9999,9999,
+Cash Report,Data,Ending Cash,USD,9999,9999,9999,
+Cash Report,Data,Ending Settled Cash,USD,9999,9999,9999,
+Open Positions,Header,DataDiscriminator,Asset Category,Currency,Symbol,Open,Quantity,Mult,Cost Price,Cost Basis,Close Price,Value,Unrealized P/L,Code
+Open Positions,Data,Summary,Stocks,USD,BABA,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,CRCL,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,DEMO,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Lot,Stocks,USD,DEMO,9999-9999-9999 (Vesting: 9999-9999-9999),9999,,9999,9999,9999,9999,9999,Un;ST
+Open Positions,Data,Summary,Stocks,USD,INTU,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,MSFT,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,NFLX,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,NVDA,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,ORCL,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,TEM,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Data,Summary,Stocks,USD,UBER,-,9999,9999,9999,9999,9999,9999,9999,
+Open Positions,Total,,Stocks,USD,,,,,,9999,,9999,9999,
+Forex Balances,Header,Asset Category,Currency,Description,Quantity,Cost Price,Cost Basis in USD,Close Price,Value in USD,Unrealized P/L in USD,Code
+Forex Balances,Data,Forex,USD,HKD,9999,9999,9999,9999,9999,9999,
+Forex Balances,Data,Forex,USD,USD,9999,9999,9999,9999,9999,9999,
+Forex Balances,Data,Total,,,,,9999,,9999,9999,
+Net Stock Position Summary,Header,Asset Category,Currency,Symbol,Description,Shares at IB,Shares Borrowed,Shares Lent,Net Shares
+Net Stock Position Summary,Data,Stocks,USD,BABA,ALIBABA GROUP HOLDING-SP ADR,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,CRCL,CIRCLE INTERNET GROUP INC,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,DEMO,DEMO HOLDING,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,INTU,INTUIT INC,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,MSFT,MICROSOFT CORP,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,NFLX,NETFLIX INC,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,NVDA,NVIDIA CORP,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,ORCL,ORACLE CORP,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,TEM,TEMPUS AI INC-CL A,9999,9999,9999,9999
+Net Stock Position Summary,Data,Stocks,USD,UBER,UBER TECHNOLOGIES INC,9999,9999,9999,9999
+Trades,Header,DataDiscriminator,Asset Category,Currency,Symbol,Date/Time,Quantity,T. Price,C. Price,Proceeds,Comm/Fee,Basis,Realized P/L,MTM P/L,Code
+Trades,Data,Order,Stocks,USD,AVGO,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,SubTotal,,Stocks,USD,AVGO,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,BABA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,IM;O;P
+Trades,SubTotal,,Stocks,USD,BABA,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,COST,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,SubTotal,,Stocks,USD,COST,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,CRCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FPA;IM;O;P
+Trades,Data,Order,Stocks,USD,CRCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,CRCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,CRCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C
+Trades,Data,Order,Stocks,USD,CRCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,Data,Order,Stocks,USD,CRCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C
+Trades,SubTotal,,Stocks,USD,CRCL,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,INTU,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,SubTotal,,Stocks,USD,INTU,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,MSFT,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,SubTotal,,Stocks,USD,MSFT,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,NFLX,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,NFLX,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,NFLX,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C
+Trades,Data,Order,Stocks,USD,NFLX,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C
+Trades,Data,Order,Stocks,USD,NFLX,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,SubTotal,,Stocks,USD,NFLX,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,NVDA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,NVDA,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,SubTotal,,Stocks,USD,NVDA,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,ORCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,ORCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O;RP
+Trades,Data,Order,Stocks,USD,ORCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FP;O
+Trades,Data,Order,Stocks,USD,ORCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,ORCL,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,SubTotal,,Stocks,USD,ORCL,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,SGOV,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C
+Trades,Data,Order,Stocks,USD,SGOV,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;IA
+Trades,Data,Order,Stocks,USD,SGOV,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,C;FP
+Trades,SubTotal,,Stocks,USD,SGOV,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,TEM,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,Data,Order,Stocks,USD,TEM,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,SubTotal,,Stocks,USD,TEM,,9999,,,9999,9999,9999,9999,9999,
+Trades,Data,Order,Stocks,USD,UBER,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,FPA;O;P
+Trades,Data,Order,Stocks,USD,UBER,"9999-9999-9999, 9999:9999:9999",9999,9999,9999,9999,9999,9999,9999,9999,O
+Trades,SubTotal,,Stocks,USD,UBER,,9999,,,9999,9999,9999,9999,9999,
+Trades,Total,,Stocks,USD,,,,,,9999,9999,9999,9999,9999,
+Trades,Header,DataDiscriminator,Asset Category,Currency,Symbol,Date/Time,Quantity,T. Price,,Proceeds,Comm in USD,,,MTM in USD,Code
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx;P
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,AFx
+Trades,Data,Order,Forex,HKD,USD.HKD,"9999-9999-9999, 9999:9999:9999",9999,9999,,9999,9999,,,9999,
+Trades,SubTotal,,Forex,HKD,USD.HKD,,9999,,,9999,9999,,,9999,
+Trades,Total,,Forex,HKD,,,,,,9999,9999,,,9999,
+Trades,Total,,Forex,USD,,,,,,9999,9999,,,9999,
+Grant Activity,Header,Symbol,Report Date,Description,Award Date,Vesting Date,Quantity,Price,Value
+Grant Activity,Data,DEMO,9999-9999-9999,Stock Award Grant for Cash Deposit,9999-9999-9999,9999-9999-9999,9999,9999,9999
+Grant Activity,Data,DEMO,9999-9999-9999,Stock Award Grant for Cash Deposit,9999-9999-9999,9999-9999-9999,9999,9999,9999
+Grant Activity,Data,DEMO,9999-9999-9999,Stock Award Grant for Cash Deposit,9999-9999-9999,9999-9999-9999,9999,9999,9999
+Grant Activity,Data,DEMO,9999-9999-9999,Stock Award Grant for Cash Deposit,9999-9999-9999,9999-9999-9999,9999,9999,9999
+Grant Activity,Data,DEMO,9999-9999-9999,Stock Award Grant for Cash Deposit,9999-9999-9999,9999-9999-9999,9999,9999,9999
+Grant Activity,Data,DEMO,9999-9999-9999,Stock Award Grant for Cash Deposit,9999-9999-9999,9999-9999-9999,9999,9999,9999
+Grant Activity,Data,Total,,,,,9999,,9999
+Deposits & Withdrawals,Header,Currency,Settle Date,Description,Amount
+Deposits & Withdrawals,Data,HKD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,HKD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,HKD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,HKD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,HKD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,Total,,,9999
+Deposits & Withdrawals,Data,Total in USD,,,9999
+Deposits & Withdrawals,Data,USD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,USD,9999-9999-9999,Electronic Fund Transfer,9999
+Deposits & Withdrawals,Data,Total,,,9999
+Deposits & Withdrawals,Data,Total Deposits & Withdrawals in USD,,,9999
+Fees,Header,Subtitle,Currency,Date,Description,Amount
+Fees,Data,Other Fees,USD,9999-9999-9999,BABA(9999W9999) ADR Fee USD 9999.9999 per Share,9999
+Fees,Data,Total,,,,9999
+Dividends,Header,Currency,Date,Description,Amount
+Dividends,Data,USD,9999-9999-9999,MSFT(US9999) Cash Dividend USD 9999.9999 per Share (Ordinary Dividend),9999
+Dividends,Data,USD,9999-9999-9999,DEMO(US9999N9999) Payment in Lieu of Dividend (Ordinary Dividend),9999
+Dividends,Data,USD,9999-9999-9999,AVGO(US9999F9999) Cash Dividend USD 9999.9999 per Share (Ordinary Dividend),9999
+Dividends,Data,USD,9999-9999-9999,INTU(US9999) Cash Dividend USD 9999.9999 per Share (Ordinary Dividend),9999
+Dividends,Data,USD,9999-9999-9999,ORCL(US9999X9999) Cash Dividend USD 9999.9999 per Share (Ordinary Dividend),9999
+Dividends,Data,Total,,,9999
+Withholding Tax,Header,Currency,Date,Description,Amount,Code
+Withholding Tax,Data,USD,9999-9999-9999,MSFT(US9999) Cash Dividend USD 9999.9999 per Share - US Tax,9999,
+Withholding Tax,Data,USD,9999-9999-9999,AVGO(US9999F9999) Cash Dividend USD 9999.9999 per Share - US Tax,9999,
+Withholding Tax,Data,USD,9999-9999-9999,INTU(US9999) Cash Dividend USD 9999.9999 per Share - US Tax,9999,
+Withholding Tax,Data,USD,9999-9999-9999,ORCL(US9999X9999) Cash Dividend USD 9999.9999 per Share - US Tax,9999,
+Withholding Tax,Data,Total,,,9999,
+Interest,Header,Currency,Date,Description,Amount
+Interest,Data,USD,9999-9999-9999,USD Demo Securities Lending (SYEP) for Mar-9999,9999
+Interest,Data,USD,9999-9999-9999,USD Demo Securities Lending (SYEP) for Apr-9999,9999
+Interest,Data,Total,,,9999
+Change in Dividend Accruals,Header,Asset Category,Currency,Symbol,Date,Ex Date,Pay Date,Quantity,Tax,Fee,Gross Rate,Gross Amount,Net Amount,Code
+Change in Dividend Accruals,Data,Starting Dividend Accruals in USD,,,,,,,,,,,9999,
+Change in Dividend Accruals,Data,Stocks,USD,AVGO,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Po
+Change in Dividend Accruals,Data,Stocks,USD,AVGO,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Re
+Change in Dividend Accruals,Data,Stocks,USD,BABA,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,ADR;Po
+Change in Dividend Accruals,Data,Stocks,USD,BABA,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,ADR;Re
+Change in Dividend Accruals,Data,Stocks,USD,DEMO,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Po
+Change in Dividend Accruals,Data,Stocks,USD,DEMO,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Re
+Change in Dividend Accruals,Data,Stocks,USD,INTU,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Po
+Change in Dividend Accruals,Data,Stocks,USD,INTU,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Re
+Change in Dividend Accruals,Data,Stocks,USD,MSFT,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Po
+Change in Dividend Accruals,Data,Stocks,USD,MSFT,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Re
+Change in Dividend Accruals,Data,Stocks,USD,ORCL,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Po
+Change in Dividend Accruals,Data,Stocks,USD,ORCL,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Re
+Change in Dividend Accruals,Data,Stocks,USD,ORCL,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Po
+Change in Dividend Accruals,Data,Stocks,USD,ORCL,9999-9999-9999,9999-9999-9999,9999-9999-9999,9999,9999,9999,9999,9999,9999,Re
+Change in Dividend Accruals,Data,Total,,,,,,,9999,9999,,9999,9999,
+Change in Dividend Accruals,Data,Ending Dividend Accruals in USD,,,,,,,,,,,9999,
+Stock Yield Enhancement Program Securities Lent Activity,Header,Asset Category,Currency,Symbol,Date,Description, ,Transaction ID,Quantity,Collateral Amount
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,New Loan Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,Loan Return Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,New Loan Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,Loan Return Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,New Loan Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,Loan Return Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,New Loan Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,Loan Return Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,New Loan Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Stocks,USD,TEM,9999-9999-9999,Loan Return Allocation, ,SLB.9999,9999,9999
+Stock Yield Enhancement Program Securities Lent Activity,Data,Total,,,,,,,,9999
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Header,Currency,Value Date,Symbol,Start Date,Quantity,Collateral Amount,Market-based Rate (%),SYEP Rate on Customer Collateral (%),SYEP Fee Earned by Customer,Code
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,USD,9999-9999-9999,TEM,9999-9999-9999,9999,9999,9999,9999,9999,Po
+Stock Yield Enhancement Program Securities Lent Fee Earned Details,Data,Total,,,,,,,,9999,
+Financial Instrument Information,Header,Asset Category,Symbol,Description,Conid,Security ID,Underlying,Listing Exch,Multiplier,Type,Code
+Financial Instrument Information,Data,Stocks,AVGO,BROADCOM INC,9999,US9999F9999,AVGO,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,BABA,ALIBABA GROUP HOLDING-SP ADR,9999,US9999W9999,BABA,NYSE,9999,ADR,
+Financial Instrument Information,Data,Stocks,COST,COSTCO WHOLESALE CORP,9999,US9999K9999,COST,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,CRCL,CIRCLE INTERNET GROUP INC,9999,US9999,CRCL,NYSE,9999,COMMON,
+Financial Instrument Information,Data,Stocks,DEMO,DEMO HOLDING,9999,US9999N9999,DEMO,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,INTU,INTUIT INC,9999,US9999,INTU,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,MSFT,MICROSOFT CORP,9999,US9999,MSFT,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,NFLX,NETFLIX INC,9999,US9999L9999,NFLX,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,NVDA,NVIDIA CORP,9999,US9999G9999,NVDA,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,ORCL,ORACLE CORP,9999,US9999X9999,ORCL,NYSE,9999,COMMON,
+Financial Instrument Information,Data,Stocks,SGOV,ISHARES 9999-9999 MONTH TREASURY B,9999,US9999E9999,SGOV,ARCA,9999,ETF,
+Financial Instrument Information,Data,Stocks,TEM,TEMPUS AI INC-CL A,9999,US9999B9999,TEM,NASDAQ,9999,COMMON,
+Financial Instrument Information,Data,Stocks,UBER,UBER TECHNOLOGIES INC,9999,US9999T9999,UBER,NYSE,9999,COMMON,

@@ -1,0 +1,8 @@
+node_modules/
+.vercel/
+dist/
+outputs/
+*.log
+stitch-reference/chrome-lang-profile/
+.DS_Store
+Thumbs.db

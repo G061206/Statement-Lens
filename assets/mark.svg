@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Statement Lens">
+  <rect width="128" height="128" rx="28" fill="#111317"/>
+  <path d="M31 28h44l17 17v45H31z" fill="#ffffff"/>
+  <path d="M75 28v17h17" fill="#ffc6ce"/>
+  <path d="M43 47h19M43 58h15" stroke="#e31937" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="68" cy="78" r="18" fill="#111317" stroke="#e31937" stroke-width="5"/>
+  <path d="m81 91 16 16" stroke="#e31937" stroke-width="7" stroke-linecap="round"/>
+  <path d="m57 80 7-7 6 5 8-10" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

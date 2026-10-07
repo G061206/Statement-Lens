@@ -1,0 +1,1231 @@
+const OPTION_ASSET = "Equity and Index Options";
+
+const SECTION_ALIASES = new Map([
+  ["账户信息", "Account Information"],
+  ["帐户信息", "Account Information"],
+  ["账户资料", "Account Information"],
+  ["净资产值", "Net Asset Value"],
+  ["净资产价值", "Net Asset Value"],
+  ["资产净值", "Net Asset Value"],
+  ["净资产值变更", "Change in NAV"],
+  ["资产净值变更", "Change in NAV"],
+  ["按市值计算的表现总结", "Mark-to-Market Performance Summary"],
+  ["按市值计算的业绩摘要", "Mark-to-Market Performance Summary"],
+  ["按市值计价业绩摘要", "Mark-to-Market Performance Summary"],
+  ["已实现和未实现的表现总结", "Realized & Unrealized Performance Summary"],
+  ["已实现和未实现业绩摘要", "Realized & Unrealized Performance Summary"],
+  ["未平仓持仓", "Open Positions"],
+  ["未平仓头寸", "Open Positions"],
+  ["交易", "Trades"],
+  ["成交", "Trades"],
+  ["股息", "Dividends"],
+  ["利息", "Interest"],
+  ["费用", "Fees"],
+  ["外汇盈亏明细", "Forex P/L Details"],
+  ["外汇损益明细", "Forex P/L Details"],
+  ["基础货币汇率", "Base Currency Exchange Rate"],
+  ["基础货币兑换率", "Base Currency Exchange Rate"],
+  ["股票收益提升计划证券出借赚取费用详情", "Stock Yield Enhancement Program Securities Lent Interest Details"]
+]);
+
+const HEADER_ALIASES = new Map([
+  ["域名称", "Field Name"],
+  ["字段名称", "Field Name"],
+  ["域值", "Field Value"],
+  ["字段值", "Field Value"],
+  ["资产类型", "Asset Class"],
+  ["资产分类", "Asset Category"],
+  ["当前合计", "Current Total"],
+  ["时间加权的收益率", "Time Weighted Rate of Return"],
+  ["时间加权收益率", "Time Weighted Rate of Return"],
+  ["当前 价格", "Current Price"],
+  ["当前价格", "Current Price"],
+  ["已实现的 总数", "Realized Total"],
+  ["已实现的总数", "Realized Total"],
+  ["未实现的 总数", "Unrealized Total"],
+  ["未实现的总数", "Unrealized Total"],
+  ["总数", "Total"],
+  ["货币", "Currency"],
+  ["日期", "Date"],
+  ["日期/时间", "Date/Time"],
+  ["描述", "Description"],
+  ["金额", "Amount"],
+  ["数量", "Quantity"],
+  ["合约乘数", "Mult"],
+  ["乘数", "Mult"],
+  ["成本价格", "Cost Price"],
+  ["成本基础", "Cost Basis"],
+  ["收盘价格", "Close Price"],
+  ["价值", "Value"],
+  ["未实现的损益", "Unrealized P/L"],
+  ["未实现盈亏", "Unrealized P/L"],
+  ["交易价格", "T. Price"],
+  ["收益", "Proceeds"],
+  ["佣金/税", "Comm/Fee"],
+  ["基础", "Basis"],
+  ["已实现的损益", "Realized P/L"],
+  ["已实现盈亏", "Realized P/L"],
+  ["按市值计算的损益", "MTM P/L"],
+  ["起息日", "Value Date"],
+  ["股票收益提升计划费用 客户赚取的", "Interest Paid to Customer"],
+  ["股票收益提升计划费用客户赚取的", "Interest Paid to Customer"],
+  ["汇率", "Rate"],
+  ["兑换率", "Exchange Rate"],
+  ["DataDiscriminator", "DataDiscriminator"]
+]);
+
+const FIELD_NAME_ALIASES = new Map([
+  ["名称", "Name"],
+  ["账户", "Account"],
+  ["帐户", "Account"],
+  ["基础货币", "Base Currency"],
+  ["基本货币", "Base Currency"],
+  ["期间", "Period"],
+  ["开始价值", "Starting Value"],
+  ["期初价值", "Starting Value"],
+  ["按市值计价", "Mark-to-Market"],
+  ["存款和取款", "Deposits & Withdrawals"],
+  ["股票赠与活动", "Stock Grant Activity"],
+  ["股息", "Dividends"],
+  ["代扣税款", "Withholding Tax"],
+  ["利息", "Interest"],
+  ["应计利息的变化", "Change in Interest Accruals"],
+  ["应计股息的变化", "Change in Dividend Accruals"],
+  ["其它费用", "Other Fees"],
+  ["其他费用", "Other Fees"],
+  ["佣金", "Commissions"],
+  ["销售税", "Sales Tax"],
+  ["其它外汇折算", "Other FX Translations"],
+  ["其他外汇折算", "Other FX Translations"],
+  ["结束价值", "Ending Value"],
+  ["期末价值", "Ending Value"]
+]);
+
+const ASSET_CATEGORY_ALIASES = new Map([
+  ["股票", "Stocks"],
+  ["外汇", "Forex"],
+  ["期权", OPTION_ASSET],
+  ["股票和指数期权", OPTION_ASSET],
+  ["权益和指数期权", OPTION_ASSET],
+  ["股权和指数期权", OPTION_ASSET],
+  ["总数", "Total"],
+  ["合计", "Total"],
+  ["总计（全部资产）", "Total (All Assets)"],
+  ["总计(全部资产)", "Total (All Assets)"]
+]);
+
+const ASSET_CLASS_ALIASES = new Map([
+  ["现金", "Cash"],
+  ["总数", "Total"],
+  ["合计", "Total"]
+]);
+
+const ROW_TYPE_ALIASES = new Map([
+  ["标题", "Header"],
+  ["表头", "Header"],
+  ["数据", "Data"],
+  ["资料", "Data"],
+  ["明细", "Data"]
+]);
+
+export class ReportError extends Error {
+  constructor(code, currency = "") {
+    super(code);
+    this.name = "ReportError";
+    this.code = code;
+    this.currency = currency;
+  }
+}
+
+function currencyCode(value, fallback = "USD") {
+  const currency = String(value || fallback).trim().toUpperCase();
+  if (!/^[A-Z]{3}$/.test(currency)) throw new ReportError("invalidCurrency");
+  return currency;
+}
+
+function getRate(rates, currency) {
+  const code = currencyCode(currency);
+  if (!Object.hasOwn(rates, code) || !Number.isFinite(rates[code]) || rates[code] <= 0) {
+    throw new ReportError("missingExchangeRate", code);
+  }
+  return rates[code];
+}
+
+export function parseIbkrReport(csvText) {
+  const sections = collectSections(csvText);
+  return parseSections(sections);
+}
+
+function parseSections(sections) {
+  const accountInfo = parseAccountInfo(sections);
+  const exchangeRates = parseExchangeRates(sections, accountInfo.baseCurrency);
+  const dividendIncome = parseDividendIncome(sections, exchangeRates);
+  const positions = applyPositionDividends(
+    parseOpenPositions(sections["Open Positions"], exchangeRates),
+    dividendIncome
+  );
+  const tradeSummary = analyzeTrades(sections.Trades, exchangeRates);
+  const tradeDetails = parseTradeDetails(sections.Trades, exchangeRates);
+  const { plSummary, closedPositions } = parsePlSummary(
+    sections["Realized & Unrealized Performance Summary"],
+    sections.Trades
+  );
+  const monthlySummary = analyzeMonthlySummary(sections, exchangeRates);
+  const dailyTradeStats = analyzeDailyTrades(sections.Trades, exchangeRates);
+  const tickerPL = analyzeTickerPL(closedPositions);
+  const nav = parseNetAssetValue(sections["Net Asset Value"], accountInfo.baseCurrency);
+  const navChange = parseNavChange(sections["Change in NAV"]);
+  const assetAllocation = summarizePositions(positions, "assetCategory");
+  const currencyExposure = summarizePositions(positions, "currency");
+  const warnings = buildWarnings(sections, nav, positions, tradeSummary);
+
+  return {
+    accountInfo,
+    baseCurrency: accountInfo.baseCurrency,
+    exchangeRates,
+    nav,
+    navChange,
+    plSummary,
+    dividendIncome,
+    positions,
+    closedPositions,
+    monthlySummary,
+    dailyTradeStats,
+    tickerPL,
+    assetAllocation,
+    currencyExposure,
+    tradeSummary,
+    tradeDetails,
+    sectionStats: Object.fromEntries(
+      Object.entries(sections).map(([name, rows]) => [name, rows.length])
+    ),
+    warnings,
+    generatedAt: new Date().toISOString()
+  };
+}
+
+// Merge disjoint periods, retaining each statement's own conversion rates.
+// Summary rows cannot be safely prorated when reporting periods overlap.
+export function parseIbkrReports(sources) {
+  if (!sources?.length) throw new ReportError("emptyStatements");
+  const fingerprints = new Set();
+  const duplicates = [];
+  const statements = [];
+  for (const [index, source] of sources.entries()) {
+    const name = source.name || `statement-${index + 1}.csv`;
+    try {
+      const sections = collectSections(String(source.text || ""));
+      if (!Object.keys(sections).length) throw new ReportError("invalidStatement");
+      const fingerprint = JSON.stringify(Object.entries(sections).sort(([a], [b]) => a.localeCompare(b))
+        .map(([section, rows]) => [section, rows
+          .filter(row => section !== "Statement" || row["Field Name"] !== "WhenGenerated")
+          .map(row => Object.entries(row).slice(2).sort(([a], [b]) => a.localeCompare(b)))]));
+      if (fingerprints.has(fingerprint)) {
+        duplicates.push(name);
+        continue;
+      }
+      fingerprints.add(fingerprint);
+      statements.push({ name, sections, data: parseSections(sections) });
+    } catch (error) {
+      error.sourceName = name;
+      throw error;
+    }
+  }
+  const metadata = statement => ({
+    name: statement.name,
+    period: statement.data.accountInfo.period,
+    account: statement.data.accountInfo.account,
+    baseCurrency: statement.data.baseCurrency,
+    exchangeRates: statement.data.exchangeRates,
+    warnings: statement.data.warnings,
+    sectionStats: statement.data.sectionStats
+  });
+  if (statements.length === 1) {
+    return { ...statements[0].data, mergeInfo: {
+      statementCount: 1, sources: statements.map(metadata), duplicates
+    } };
+  }
+  const account = statements[0].data.accountInfo.account;
+  if (!account || statements.some(s => !s.data.accountInfo.account)) throw new ReportError("mergeMissingAccount");
+  if (statements.some(s => s.data.accountInfo.account !== account)) throw new ReportError("mergeAccountMismatch");
+  if (statements.some(s => !(s.sections["Account Information"] || [])
+    .some(row => row["Field Name"] === "Base Currency" && row["Field Value"]))) throw new ReportError("mergeMissingBaseCurrency");
+  if (statements.some(s => s.data.baseCurrency !== statements[0].data.baseCurrency)) throw new ReportError("mergeCurrencyMismatch");
+  for (const statement of statements) {
+    statement.range = parseStatementPeriod(statement.data.accountInfo.period);
+    if (!statement.range) {
+      const error = new ReportError("mergeInvalidPeriod");
+      error.sourceName = statement.name;
+      throw error;
+    }
+    for (const section of ["Trades", "Dividends", "Interest", "Fees", "Forex P/L Details", "Stock Yield Enhancement Program Securities Lent Interest Details"]) {
+      for (const row of statement.sections[section] || []) {
+        const date = parseDate(row["Date/Time"] || row.Date || row["Value Date"]);
+        if (!date) continue;
+        const day = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+        if (day < statement.range.start || day > statement.range.end) {
+          const error = new ReportError("mergeDateOutsidePeriod");
+          error.sourceName = statement.name;
+          throw error;
+        }
+      }
+    }
+  }
+  statements.sort((a, b) => a.range.start - b.range.start);
+  let hasGaps = false;
+  for (let index = 1; index < statements.length; index += 1) {
+    if (statements[index].range.start <= statements[index - 1].range.end) throw new ReportError("mergeOverlappingPeriods");
+    if (statements[index].range.start !== statements[index - 1].range.end + 86400000) hasGaps = true;
+  }
+  const first = statements[0];
+  const latest = statements.at(-1);
+  const reports = statements.map(s => s.data);
+  const sum = values => values.every(Number.isFinite) ? values.reduce((total, value) => total + value, 0) : null;
+  const aggregateRows = (rows, key, fields) => {
+    const grouped = new Map();
+    for (const row of rows) {
+      if (!grouped.has(row[key])) grouped.set(row[key], { ...row, ...Object.fromEntries(fields.map(field => [field, 0])) });
+      const target = grouped.get(row[key]);
+      for (const field of fields) target[field] += row[field];
+      if (row.symbols) target.symbols = [...new Set([...target.symbols, ...row.symbols])].sort();
+    }
+    return [...grouped.values()].sort((a, b) => a[key].localeCompare(b[key]));
+  };
+  const plSummary = Object.fromEntries(Object.keys(latest.data.plSummary).map(key => {
+    const realized = sum(reports.map(report => report.plSummary[key].realized));
+    const unrealized = latest.data.plSummary[key].unrealized;
+    return [key, { realized, unrealized, total: sum([realized, unrealized]) }];
+  }));
+  const dividendIncome = { bySymbol: {}, bySymbolBase: {}, total: sum(reports.map(r => r.dividendIncome.total)) };
+  for (const report of reports) {
+    for (const field of ["bySymbol", "bySymbolBase"]) {
+      for (const [symbol, value] of Object.entries(report.dividendIncome[field])) {
+        dividendIncome[field][symbol] = (dividendIncome[field][symbol] || 0) + value;
+      }
+    }
+  }
+  const closedMap = new Map();
+  for (const row of reports.flatMap(r => r.closedPositions)) {
+    const key = JSON.stringify([row.assetCategory, row.symbol]);
+    const prior = closedMap.get(key);
+    closedMap.set(key, { ...row, realizedPL: row.realizedPL + (prior?.realizedPL || 0),
+      closeDate: [prior?.closeDate || "", row.closeDate].sort().at(-1) });
+  }
+  const closedPositions = [...closedMap.values()];
+  const hasReturns = statements.every(s => (s.sections["Net Asset Value"] || [])
+    .some(row => {
+      const raw = row["Time Weighted Rate of Return"];
+      const numeric = raw?.replace(/[,%\s()]/g, "");
+      return numeric && Number.isFinite(Number(numeric));
+    }));
+  const rateOfReturn = !hasGaps && hasReturns
+    ? (reports.reduce((factor, r) => factor * (1 + r.nav.rateOfReturn / 100), 1) - 1) * 100 : null;
+  const warnings = [...new Set(reports.flatMap(r => r.warnings))];
+  if (hasGaps) warnings.push("mergePeriodGaps");
+  if (rateOfReturn === null) warnings.push("mergeReturnUnavailable");
+  const navChange = latest.data.navChange.map(row => ({ ...row, value:
+    row.key === "startingValue" ? first.data.navChange.find(item => item.key === row.key).value :
+      row.key === "endingValue" ? row.value : sum(reports.map(r => r.navChange.find(item => item.key === row.key).value))
+  }));
+  const tradeFields = ["orderCount", "stockOrders", "optionOrders", "forexOrders", "totalCommissions", "optionPremium", "realizedPL"];
+  const tradeDates = reports.flatMap(r => [r.tradeSummary.firstTradeDate, r.tradeSummary.lastTradeDate]).filter(Boolean).sort();
+  const tradeSummary = {
+    ...Object.fromEntries(tradeFields.map(field => [field, sum(reports.map(r => r.tradeSummary[field]))])),
+    firstTradeDate: tradeDates[0] || "", lastTradeDate: tradeDates.at(-1) || "",
+    topRealizedTrades: reports.flatMap(r => r.tradeSummary.topRealizedTrades)
+      .sort((a, b) => Math.abs(b.baseRealizedPL) - Math.abs(a.baseRealizedPL)).slice(0, 10)
+  };
+  const period = `${new Date(first.range.start).toISOString().slice(0, 10)} - ${new Date(latest.range.end).toISOString().slice(0, 10)}`;
+  return {
+    ...latest.data,
+    accountInfo: { ...latest.data.accountInfo, period },
+    nav: { ...latest.data.nav, rateOfReturn }, navChange, plSummary, dividendIncome,
+    positions: applyPositionDividends(latest.data.positions, dividendIncome), closedPositions,
+    tickerPL: analyzeTickerPL(closedPositions), tradeSummary,
+    tradeDetails: reports.flatMap(r => r.tradeDetails).sort((a, b) => a.dateTime.localeCompare(b.dateTime)),
+    dailyTradeStats: aggregateRows(reports.flatMap(r => r.dailyTradeStats), "date",
+      ["tradeCount", "realizedPL", "mtmPL", "grossTradeValue", "commissions"]).map(row => ({ ...row, symbolCount: row.symbols.length })),
+    monthlySummary: aggregateRows(reports.flatMap(r => r.monthlySummary), "month",
+      ["optionsPL", "optionsPremium", "stocksPL", "forexPL", "syepIncome", "interest", "commissions", "forexCommissions", "fees", "net"]),
+    sectionStats: Object.fromEntries([...new Set(reports.flatMap(r => Object.keys(r.sectionStats)))]
+      .map(section => [section, sum(reports.map(r => r.sectionStats[section] || 0))])),
+    warnings, generatedAt: new Date().toISOString(),
+    mergeInfo: { statementCount: statements.length, sources: statements.map(metadata), duplicates,
+      snapshotSource: latest.name, hasGaps }
+  };
+}
+
+function parseStatementPeriod(value) {
+  const text = String(value || "").trim();
+  const monthOnly = text.match(/^([A-Za-z]+)\s+(\d{4})$/);
+  const numericMonth = text.match(/^(\d{4})-(\d{2})$/);
+  const yearOnly = text.match(/^(\d{4})$/);
+  if (monthOnly || numericMonth || yearOnly) {
+    const year = Number(monthOnly?.[2] || numericMonth?.[1] || yearOnly[1]);
+    const month = monthOnly ? new Date(`${monthOnly[1]} 1, ${year} UTC`).getUTCMonth() : numericMonth ? Number(numericMonth[2]) - 1 : 0;
+    if (!Number.isInteger(month) || month < 0 || month > 11) return null;
+    return { start: Date.UTC(year, month, 1), end: Date.UTC(year, yearOnly ? 12 : month + 1, 0) };
+  }
+  const parts = text.split(/\s+(?:-|–|—|to)\s+|\s*至\s*/i);
+  if (parts.length > 2) return null;
+  const day = value => {
+    const normalized = value.replace(/(\d{4})年(\d{1,2})月(\d{1,2})日/, "$1-$2-$3");
+    const iso = normalized.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+    const us = normalized.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    const english = normalized.match(/^([A-Za-z]+) (\d{1,2}),? (\d{4})$/);
+    if (!iso && !us && !english) return null;
+    const year = Number(iso?.[1] || us?.[3] || english?.[3]);
+    const month = iso ? Number(iso[2]) - 1 : us ? Number(us[1]) - 1 : new Date(`${english[1]} 1, ${year} UTC`).getUTCMonth();
+    const date = Number(iso?.[3] || us?.[2] || english?.[2]);
+    const time = Date.UTC(year, month, date);
+    const result = new Date(time);
+    return result.getUTCFullYear() === year && result.getUTCMonth() === month && result.getUTCDate() === date ? time : null;
+  };
+  const start = day(parts[0]);
+  const end = day(parts.at(-1));
+  return start !== null && end !== null && start <= end ? { start, end } : null;
+}
+
+function collectSections(csvText) {
+  const rows = splitCsvRows(csvText)
+    .map(parseCsvLine)
+    .filter((row) => row.some((cell) => cell.trim() !== ""));
+
+  const blocks = [];
+  let currentBlock = null;
+
+  for (const rawColumns of rows) {
+    const columns = rawColumns.map((cell, index) => {
+      const clean = String(cell ?? "").trim();
+      return index === 0 ? clean.replace(/^\uFEFF/, "") : clean;
+    });
+
+    if (columns.length < 2) continue;
+
+    const sectionName = normalizeSectionName(columns[0]);
+    const rowType = ROW_TYPE_ALIASES.get(columns[1]) || columns[1];
+
+    if (rowType === "Header") {
+      if (currentBlock) blocks.push(currentBlock);
+      currentBlock = {
+        section: sectionName,
+        headers: columns.map((header, index) => normalizeHeader(sectionName, header, index, columns)),
+        rows: []
+      };
+      continue;
+    }
+
+    if (rowType === "Data" && currentBlock) {
+      currentBlock.rows.push(columns);
+    }
+  }
+
+  if (currentBlock) blocks.push(currentBlock);
+
+  return blocks.reduce((sections, block) => {
+    if (!sections[block.section]) sections[block.section] = [];
+
+    for (const dataRow of block.rows) {
+      const row = {};
+      block.headers.forEach((header, index) => {
+        if (header) row[header] = normalizeCellValue(header, dataRow[index]);
+      });
+      sections[block.section].push(row);
+    }
+
+    return sections;
+  }, {});
+}
+
+function normalizeSectionName(value) {
+  const name = String(value || "").trim();
+  return SECTION_ALIASES.get(name) || name;
+}
+
+function normalizeHeader(section, value, index, rawHeaders) {
+  const header = String(value || "").trim().replace(/\s+/g, " ");
+  if (!header) return "";
+
+  if (header === "代码") {
+    const codeIndexes = rawHeaders
+      .map((item, itemIndex) => String(item || "").trim() === "代码" ? itemIndex : -1)
+      .filter((itemIndex) => itemIndex >= 0);
+    if (codeIndexes.length > 1 && index === codeIndexes.at(-1)) return "Code";
+    return section === "Codes" ? "Code" : "Symbol";
+  }
+
+  const commissionCurrency = header.match(/^佣金(?:\/税)?\s+([A-Z]{3})$/i);
+  if (commissionCurrency) return `Comm in ${commissionCurrency[1].toUpperCase()}`;
+
+  const mtmCurrency = header.match(/^(?:以市值计[（(]MTM[）)]|按市值计价|按市值计算的损益)\s+([A-Z]{3})$/i);
+  if (mtmCurrency) return `MTM in ${mtmCurrency[1].toUpperCase()}`;
+
+  return HEADER_ALIASES.get(header) || header;
+}
+
+function normalizeCellValue(header, value) {
+  const clean = String(value ?? "").trim();
+  if (header === "Field Name") return FIELD_NAME_ALIASES.get(clean) || clean;
+  if (header === "Asset Category") return ASSET_CATEGORY_ALIASES.get(clean) || clean;
+  if (header === "Asset Class") return ASSET_CLASS_ALIASES.get(clean) || clean;
+  if (header === "Currency" && (clean === "总数" || clean === "合计")) return "Total";
+  if (header === "DataDiscriminator") {
+    if (["订单", "交易", "成交"].includes(clean)) return "Order";
+    if (["汇总", "摘要", "总结"].includes(clean)) return "Summary";
+  }
+  return clean;
+}
+
+function splitCsvRows(text) {
+  const rows = [];
+  let row = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    const next = text[index + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      row += char + next;
+      index += 1;
+      continue;
+    }
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+      row += char;
+      continue;
+    }
+
+    if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (row.trim()) rows.push(row);
+      row = "";
+      if (char === "\r" && next === "\n") index += 1;
+      continue;
+    }
+
+    row += char;
+  }
+
+  if (row.trim()) rows.push(row);
+  return rows;
+}
+
+export function parseCsvLine(line) {
+  const cells = [];
+  let value = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < line.length; index += 1) {
+    const char = line[index];
+    const next = line[index + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      value += '"';
+      index += 1;
+      continue;
+    }
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (char === "," && !inQuotes) {
+      cells.push(value);
+      value = "";
+      continue;
+    }
+
+    value += char;
+  }
+
+  cells.push(value);
+  return cells;
+}
+
+function parseAccountInfo(sections) {
+  const infoRows = sections["Account Information"] || [];
+  const statementRows = sections.Statement || [];
+  const infoMap = new Map(
+    infoRows.map((row) => [row["Field Name"], row["Field Value"]])
+  );
+  const statementMap = new Map(
+    statementRows.map((row) => [row["Field Name"], row["Field Value"]])
+  );
+
+  return {
+    account: infoMap.get("Account") || "",
+    name: infoMap.get("Name") || "",
+    baseCurrency: currencyCode(infoMap.get("Base Currency")),
+    period: statementMap.get("Period") || infoMap.get("Period") || ""
+  };
+}
+
+function parseExchangeRates(sections, baseCurrency) {
+  const rates = { [baseCurrency || "USD"]: 1 };
+  const mtmRows = sections["Mark-to-Market Performance Summary"] || [];
+
+  for (const row of mtmRows) {
+    if (row["Asset Category"] !== "Forex") continue;
+
+    const currency = currencyCode(row.Symbol);
+    const rate = toNumber(row["Current Price"]);
+    if (currency && currency !== baseCurrency && rate > 0) {
+      rates[currency] = rate;
+    }
+  }
+
+  // Explicit conversion rates take precedence over the MTM fallback.
+  // Repeated dated entries use the latest report date, regardless of row order.
+  const datedRates = new Map();
+  for (const row of sections["Base Currency Exchange Rate"] || []) {
+    if (!row.Currency || row.Currency.startsWith("Total")) continue;
+    const currency = currencyCode(row.Currency);
+    const rate = toNumber(readValue(row, ["Rate", "Exchange Rate"]));
+    const date = parseDate(row.Date)?.getTime() ?? 0;
+    if (currency !== baseCurrency && rate > 0 && date >= (datedRates.get(currency) ?? -1)) {
+      rates[currency] = rate;
+      datedRates.set(currency, date);
+    }
+  }
+
+  return rates;
+}
+
+function parseNetAssetValue(rows = [], baseCurrency) {
+  const cashRow = rows.find((row) => row["Asset Class"] === "Cash");
+  const totalRow = rows.find((row) => row["Asset Class"] === "Total");
+  const returnRow = rows.find((row) => row["Time Weighted Rate of Return"]);
+
+  return {
+    cash: toNumber(readValue(cashRow, ["Current Total", "Total"])),
+    total: toNumber(readValue(totalRow, ["Current Total", "Total"])),
+    rateOfReturn: toNumber(readValue(returnRow, ["Time Weighted Rate of Return"])),
+    baseCurrency
+  };
+}
+
+function parseNavChange(rows = []) {
+  const map = new Map(rows.map((row) => [row["Field Name"], row["Field Value"]]));
+  const fields = [
+    ["startingValue", "期初净值", ["Starting Value"]],
+    ["markToMarket", "盯市变化", ["Mark-to-Market"]],
+    ["depositsAndWithdrawals", "出入金", ["Deposits & Withdrawals"]],
+    ["stockGrantActivity", "股票赠与", ["Stock Grant Activity"]],
+    ["dividends", "股息", ["Dividends"]],
+    ["withholdingTax", "代扣税款", ["Withholding Tax"]],
+    ["interest", "利息", ["Interest"]],
+    ["changeInInterestAccruals", "应计利息", ["Change in Interest Accruals"]],
+    ["changeInDividendAccruals", "应计股息变动", ["Change in Dividend Accruals"]],
+    ["otherFees", "其他费用", ["Other Fees"]],
+    ["commissions", "佣金", ["Commissions"]],
+    ["salesTax", "销售税", ["Sales Tax"]],
+    ["otherFXTranslations", "汇兑折算", ["Other FX Translations"]],
+    ["endingValue", "期末净值", ["Ending Value"]]
+  ];
+
+  return fields.map(([key, label, sources]) => ({
+    key,
+    label,
+    value: toNumber(sources.map((source) => map.get(source)).find((value) => value !== undefined))
+  }));
+}
+
+function parsePlSummary(rows = [], trades = []) {
+  const plSummary = {
+    stocks: { realized: 0, unrealized: 0, total: 0 },
+    options: { realized: 0, unrealized: 0, total: 0 },
+    forex: { realized: 0, unrealized: 0, total: 0 },
+    total: { realized: 0, unrealized: 0, total: 0 }
+  };
+  const closeDateBySymbol = latestCloseDateBySymbol(trades);
+  const closedPositions = [];
+  if (!rows.length) {
+    for (const key of Object.keys(plSummary)) {
+      plSummary[key] = { realized: null, unrealized: null, total: null };
+    }
+    return { plSummary, closedPositions };
+  }
+  plSummary.total = { realized: null, unrealized: null, total: null };
+  let lastAssetCategory = "";
+
+  for (const row of rows) {
+    let assetCategory = row["Asset Category"] || "";
+    if (assetCategory === OPTION_ASSET) assetCategory = "Options";
+
+    const symbol = row.Symbol;
+
+    if (assetCategory && !assetCategory.startsWith("Total")) {
+      lastAssetCategory = assetCategory;
+    }
+
+    if (symbol && assetCategory && !assetCategory.startsWith("Total")) {
+      const realizedPL = toNumber(row["Realized Total"]);
+      if (realizedPL !== 0) {
+        closedPositions.push({
+          assetCategory,
+          symbol,
+          baseSymbol: parseOptionSymbol(symbol).baseSymbol,
+          realizedPL,
+          closeDate: closeDateBySymbol.get(symbol) || ""
+        });
+      }
+    }
+
+    if (assetCategory === "Total") {
+      const summary = readPlNumbers(row);
+      if (lastAssetCategory === "Stocks") plSummary.stocks = summary;
+      if (lastAssetCategory === "Options") plSummary.options = summary;
+      if (lastAssetCategory === "Forex") plSummary.forex = summary;
+    }
+
+    if (assetCategory === "Total (All Assets)") {
+      plSummary.total = readPlNumbers(row);
+    }
+  }
+
+  return { plSummary, closedPositions };
+}
+
+function latestCloseDateBySymbol(trades = []) {
+  const map = new Map();
+  const closingTrades = trades
+    .filter((row) => row.DataDiscriminator === "Order" && toNumber(row["Realized P/L"]) !== 0)
+    .map((row) => ({
+      row,
+      date: parseDate(row["Date/Time"])
+    }))
+    .filter((item) => item.date)
+    .sort((a, b) => b.date - a.date);
+
+  for (const item of closingTrades) {
+    const symbol = item.row.Symbol;
+    if (symbol && !map.has(symbol)) {
+      map.set(symbol, item.date.toISOString());
+    }
+  }
+
+  return map;
+}
+
+function readPlNumbers(row) {
+  return {
+    realized: toNumber(row["Realized Total"]),
+    unrealized: toNumber(row["Unrealized Total"]),
+    total: toNumber(row.Total)
+  };
+}
+
+function parseOpenPositions(rows = [], exchangeRates) {
+  return rows
+    .filter((row) => row.DataDiscriminator === "Summary" && row.Symbol)
+    .map((row) => {
+      let assetCategory = row["Asset Category"] || "Other";
+      if (assetCategory === OPTION_ASSET) assetCategory = "Options";
+
+      const currency = currencyCode(row.Currency);
+      const rate = getRate(exchangeRates, currency);
+      const option = parseOptionSymbol(row.Symbol);
+      const quantity = toNumber(row.Quantity);
+      const costBasis = toNumber(row["Cost Basis"]);
+      const value = toNumber(row.Value);
+      const unrealizedPL = toNumber(row["Unrealized P/L"]);
+
+      return {
+        assetCategory,
+        symbol: row.Symbol,
+        baseSymbol: option.baseSymbol,
+        quantity,
+        side: quantity < 0 ? "Short" : "Long",
+        multiplier: toNumber(row.Mult),
+        costBasis,
+        closePrice: toNumber(row["Close Price"]),
+        value,
+        dividends: 0,
+        unrealizedPL,
+        baseCostBasis: costBasis * rate,
+        baseValue: value * rate,
+        baseDividends: 0,
+        baseUnrealizedPL: unrealizedPL * rate,
+        exchangeRate: rate,
+        currency,
+        isOption: option.isOption,
+        optionType: option.optionType || "",
+        strikePrice: option.strikePrice || 0,
+        expiry: option.expiry || ""
+      };
+    })
+    .sort((a, b) => Math.abs(b.baseValue ?? b.value) - Math.abs(a.baseValue ?? a.value));
+}
+
+function parseDividendIncome(sections, exchangeRates) {
+  const bySymbol = {};
+  const bySymbolBase = {};
+  let total = 0;
+
+  for (const row of sections.Dividends || []) {
+    if (row.Currency === "Total") continue;
+
+    const symbol = parseDividendSymbol(row);
+    if (!symbol) continue;
+
+    const currency = currencyCode(row.Currency);
+    const value = toNumber(row.Amount);
+    if (!value) continue;
+    const baseValue = value * getRate(exchangeRates, currency);
+
+    bySymbol[symbol] = (bySymbol[symbol] || 0) + value;
+    bySymbolBase[symbol] = (bySymbolBase[symbol] || 0) + baseValue;
+    total += baseValue;
+  }
+
+  return {
+    bySymbol,
+    bySymbolBase,
+    total
+  };
+}
+
+function applyPositionDividends(positions, dividendIncome) {
+  const dividendBySymbol = dividendIncome?.bySymbol || {};
+  const baseDividendBySymbol = dividendIncome?.bySymbolBase || {};
+
+  return positions.map((position) => {
+    // A stock dividend belongs to the stock, never to derivatives of that stock.
+    if (position.assetCategory !== "Stocks" || position.isOption) return position;
+    const dividends = dividendBySymbol[position.symbol] || 0;
+    const baseDividends = baseDividendBySymbol[position.symbol] || 0;
+    return {
+      ...position,
+      dividends,
+      baseDividends
+    };
+  });
+}
+
+function analyzeTrades(rows = [], exchangeRates) {
+  const orderTrades = rows.filter((row) => row.DataDiscriminator === "Order");
+  let totalCommissions = 0;
+  let optionPremium = 0;
+  let realizedPL = 0;
+  let stockOrders = 0;
+  let optionOrders = 0;
+  let forexOrders = 0;
+  const dates = [];
+  const topRealizedTrades = [];
+
+  for (const row of orderTrades) {
+    const date = parseDate(row["Date/Time"]);
+    if (date) dates.push(date);
+
+    const category = row["Asset Category"];
+    if (category === "Stocks") stockOrders += 1;
+    if (category === OPTION_ASSET) optionOrders += 1;
+    if (category === "Forex") forexOrders += 1;
+
+    const currency = currencyCode(row.Currency);
+    const rate = getRate(exchangeRates, currency);
+    const rawRealizedPL = toNumber(row["Realized P/L"]);
+    const commission = convertTradeField(row, exchangeRates, "commission");
+    const tradeRealized = rawRealizedPL * rate;
+    totalCommissions += Math.abs(commission);
+    realizedPL += tradeRealized;
+
+    if (category === OPTION_ASSET && row.Code?.includes("O") && toNumber(row.Quantity) < 0) {
+      optionPremium += toNumber(row.Proceeds) * rate + commission;
+    }
+
+    if (rawRealizedPL !== 0) {
+      topRealizedTrades.push({
+        date: date ? date.toISOString() : "",
+        symbol: row.Symbol || "",
+        category,
+        realizedPL: rawRealizedPL,
+        baseRealizedPL: tradeRealized,
+        exchangeRate: rate,
+        currency
+      });
+    }
+  }
+
+  topRealizedTrades.sort((a, b) => Math.abs(b.baseRealizedPL ?? b.realizedPL) - Math.abs(a.baseRealizedPL ?? a.realizedPL));
+
+  return {
+    orderCount: orderTrades.length,
+    stockOrders,
+    optionOrders,
+    forexOrders,
+    totalCommissions,
+    optionPremium,
+    realizedPL,
+    firstTradeDate: dates.length ? new Date(Math.min(...dates)).toISOString() : "",
+    lastTradeDate: dates.length ? new Date(Math.max(...dates)).toISOString() : "",
+    topRealizedTrades: topRealizedTrades.slice(0, 10)
+  };
+}
+
+function parseTradeDetails(rows = [], exchangeRates) {
+  return (rows || [])
+    .filter((row) => row.DataDiscriminator === "Order")
+    .map((row) => {
+      const date = parseDate(row["Date/Time"]);
+      const currency = currencyCode(row.Currency);
+      const rate = getRate(exchangeRates, currency);
+      const quantity = toNumber(row.Quantity);
+      const price = toNumber(row["T. Price"]);
+      const proceeds = toNumber(row.Proceeds);
+      const commission = toNumber(readCommission(row));
+      const realizedPL = toNumber(row["Realized P/L"]);
+      const mtmPL = readTradeField(row, "mtm").amount;
+
+      return {
+        date: date ? dateKey(date) : "",
+        dateTime: date ? date.toISOString() : "",
+        month: date ? monthKey(date) : "",
+        symbol: row.Symbol || "",
+        baseSymbol: parseOptionSymbol(row.Symbol || "").baseSymbol || row.Symbol || "",
+        assetCategory: row["Asset Category"] || "",
+        currency,
+        side: quantity < 0 ? "Sell" : "Buy",
+        quantity,
+        price,
+        proceeds,
+        grossValue: Math.abs(proceeds),
+        commission,
+        commissionCurrency: readTradeField(row, "commission").currency,
+        realizedPL,
+        mtmPL,
+        mtmCurrency: readTradeField(row, "mtm").currency,
+        baseProceeds: proceeds * rate,
+        baseGrossValue: Math.abs(proceeds * rate),
+        baseCommission: convertTradeField(row, exchangeRates, "commission"),
+        baseRealizedPL: realizedPL * rate,
+        baseMtmPL: convertTradeField(row, exchangeRates, "mtm"),
+        exchangeRate: rate,
+        code: row.Code || ""
+      };
+    })
+    .filter((row) => row.date)
+    .sort((a, b) => a.dateTime.localeCompare(b.dateTime));
+}
+
+function analyzeDailyTrades(rows = [], exchangeRates) {
+  const daily = new Map();
+  const ensureDay = (date) => {
+    const key = dateKey(date);
+    if (!daily.has(key)) {
+      daily.set(key, {
+        date: key,
+        month: monthKey(date),
+        day: date.getDate(),
+        tradeCount: 0,
+        realizedPL: 0,
+        mtmPL: 0,
+        grossTradeValue: 0,
+        commissions: 0,
+        symbols: new Set()
+      });
+    }
+    return daily.get(key);
+  };
+
+  for (const trade of rows || []) {
+    if (trade.DataDiscriminator !== "Order") continue;
+
+    const date = parseDate(trade["Date/Time"]);
+    if (!date) continue;
+
+    const currency = currencyCode(trade.Currency);
+    const rate = getRate(exchangeRates, currency);
+    const row = ensureDay(date);
+    const symbol = trade.Symbol || "";
+
+    row.tradeCount += 1;
+    row.realizedPL += toNumber(trade["Realized P/L"]) * rate;
+    row.mtmPL += convertTradeField(trade, exchangeRates, "mtm");
+    row.grossTradeValue += Math.abs(toNumber(trade.Proceeds) * rate);
+    row.commissions += Math.abs(convertTradeField(trade, exchangeRates, "commission"));
+    if (symbol) row.symbols.add(symbol);
+  }
+
+  return Array.from(daily.values())
+    .map((row) => ({
+      ...row,
+      symbolCount: row.symbols.size,
+      symbols: Array.from(row.symbols).sort()
+    }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+function analyzeMonthlySummary(sections, exchangeRates) {
+  const monthly = new Map();
+  const ensureMonth = (date) => {
+    const key = monthKey(date);
+    if (!monthly.has(key)) {
+      monthly.set(key, {
+        month: key,
+        optionsPL: 0,
+        optionsPremium: 0,
+        stocksPL: 0,
+        forexPL: 0,
+        syepIncome: 0,
+        interest: 0,
+        commissions: 0,
+        forexCommissions: 0,
+        fees: 0,
+        net: 0
+      });
+    }
+    return monthly.get(key);
+  };
+
+  for (const trade of sections.Trades || []) {
+    if (trade.DataDiscriminator !== "Order") continue;
+
+    const date = parseDate(trade["Date/Time"]);
+    if (!date) continue;
+
+    const row = ensureMonth(date);
+    const currency = currencyCode(trade.Currency);
+    const rate = getRate(exchangeRates, currency);
+    const category = trade["Asset Category"];
+    const realized = toNumber(trade["Realized P/L"]) * rate;
+    const commission = convertTradeField(trade, exchangeRates, "commission");
+
+    row.commissions += Math.abs(commission);
+
+    if (category === OPTION_ASSET) {
+      row.optionsPL += realized;
+      if (trade.Code?.includes("O") && toNumber(trade.Quantity) < 0) {
+        row.optionsPremium += toNumber(trade.Proceeds) * rate + commission;
+      }
+    } else if (category === "Stocks") {
+      row.stocksPL += realized;
+    } else if (category === "Forex") {
+      const mtm = readTradeField(trade, "mtm");
+      row.forexPL += mtm.present ? convertTradeField(trade, exchangeRates, "mtm") : realized;
+      if (mtm.present) row.forexCommissions += commission;
+    }
+  }
+
+  for (const row of sections["Forex P/L Details"] || []) {
+    const date = parseDate(row.Date);
+    if (!date) continue;
+    ensureMonth(date).forexPL += toNumber(row["Realized P/L"]);
+  }
+
+  for (const row of sections["Stock Yield Enhancement Program Securities Lent Interest Details"] || []) {
+    const date = parseDate(row["Value Date"]);
+    if (!date) continue;
+    const currency = currencyCode(row.Currency);
+    ensureMonth(date).syepIncome += toNumber(row["Interest Paid to Customer"]) * getRate(exchangeRates, currency);
+  }
+
+  for (const row of sections.Interest || []) {
+    const date = parseDate(row.Date);
+    if (!date) continue;
+    const currency = currencyCode(row.Currency);
+    ensureMonth(date).interest += toNumber(row.Amount) * getRate(exchangeRates, currency);
+  }
+
+  for (const row of sections.Fees || []) {
+    const date = parseDate(row.Date);
+    if (!date) continue;
+    const currency = currencyCode(row.Currency);
+    ensureMonth(date).fees += Math.abs(toNumber(row.Amount) * getRate(exchangeRates, currency));
+  }
+
+  return Array.from(monthly.values())
+    .map((row) => ({
+      ...row,
+      net:
+        row.optionsPL +
+        row.stocksPL +
+        row.forexPL +
+        row.syepIncome +
+        row.interest +
+        // Stock/option Realized P/L already includes commissions. Forex MTM does not.
+        row.forexCommissions -
+        row.fees
+    }))
+    .sort((a, b) => a.month.localeCompare(b.month));
+}
+
+function analyzeTickerPL(closedPositions) {
+  const map = new Map();
+
+  for (const position of closedPositions) {
+    const key = position.baseSymbol || position.symbol;
+    map.set(key, (map.get(key) || 0) + position.realizedPL);
+  }
+
+  return Array.from(map.entries())
+    .map(([ticker, realizedPL]) => ({ ticker, realizedPL }))
+    .sort((a, b) => Math.abs(b.realizedPL) - Math.abs(a.realizedPL));
+}
+
+function summarizePositions(positions, key) {
+  const map = new Map();
+
+  for (const position of positions) {
+    const name = position[key] || "Other";
+    const value = position.baseValue ?? position.value;
+    map.set(name, (map.get(name) || 0) + Math.abs(value));
+  }
+
+  const total = Array.from(map.values()).reduce((sum, value) => sum + value, 0);
+  return Array.from(map.entries())
+    .map(([name, value]) => ({
+      name,
+      value,
+      weight: total > 0 ? value / total : 0
+    }))
+    .sort((a, b) => b.value - a.value);
+}
+
+function buildWarnings(sections, nav, positions, tradeSummary) {
+  const warnings = [];
+
+  if (!sections["Account Information"]?.length) warnings.push("missingAccountInfo");
+  if (!sections["Net Asset Value"]?.length) warnings.push("missingNetAssetValue");
+  if (!sections.Trades?.length) warnings.push("missingTrades");
+  if (!sections["Open Positions"]?.length) warnings.push("missingPositions");
+  if (!sections["Realized & Unrealized Performance Summary"]?.length) {
+    warnings.push("missingPlSummary");
+  } else if (!sections["Realized & Unrealized Performance Summary"].some(row => row["Asset Category"] === "Total (All Assets)")) {
+    warnings.push("missingPlTotal");
+  }
+  if (!nav.total && positions.length === 0 && tradeSummary.orderCount === 0) {
+    warnings.push("sparseReport");
+  }
+
+  return warnings;
+}
+
+function parseOptionSymbol(symbol) {
+  if (!symbol) return { isOption: false, baseSymbol: "" };
+
+  const parts = symbol.trim().split(/\s+/);
+  const baseSymbol = parts[0] || "";
+  if (parts.length < 4) return { isOption: false, baseSymbol };
+
+  const optionType = parts[parts.length - 1];
+  const strikePrice = toNumber(parts[parts.length - 2]);
+  const expiry = parts[parts.length - 3];
+
+  if ((optionType === "P" || optionType === "C") && strikePrice > 0) {
+    return {
+      isOption: true,
+      optionType,
+      strikePrice,
+      expiry,
+      baseSymbol
+    };
+  }
+
+  return { isOption: false, baseSymbol };
+}
+
+function parseDividendSymbol(row = {}) {
+  const explicitSymbol = String(row.Symbol || "").trim();
+  if (explicitSymbol && explicitSymbol !== "Total") {
+    return parseOptionSymbol(explicitSymbol).baseSymbol || explicitSymbol;
+  }
+
+  const description = String(row.Description || "").trim();
+  const parenMatch = description.match(/^([A-Z][A-Z0-9.\-]{0,12})\s*\(/);
+  if (parenMatch) return parenMatch[1];
+
+  const textMatch = description.match(/\b([A-Z][A-Z0-9.\-]{0,12})\b(?=.*\b(?:Cash Dividend|Dividend|Payment in Lieu)\b)/i);
+  return textMatch ? textMatch[1] : "";
+}
+
+function readCommission(row) {
+  return readTradeField(row, "commission").amount;
+}
+
+function readTradeField(row, kind) {
+  const keys = kind === "commission" ? ["Comm/Fee", "Commission"] : ["MTM P/L"];
+  const prefix = kind === "commission" ? /^Comm in (.+)$/i : /^MTM in (.+)$/i;
+  for (const key of keys) {
+    if (row[key] !== undefined && row[key] !== "") {
+      return { amount: toNumber(row[key]), currency: currencyCode(row.Currency), present: true };
+    }
+  }
+  const entry = Object.entries(row).find(([key]) => prefix.test(key));
+  if (entry) {
+    return { amount: toNumber(entry[1]), currency: currencyCode(entry[0].match(prefix)[1]), present: entry[1] !== "" };
+  }
+  return { amount: 0, currency: currencyCode(row.Currency), present: false };
+}
+
+function convertTradeField(row, rates, kind) {
+  const field = readTradeField(row, kind);
+  return field.amount === 0 ? 0 : field.amount * getRate(rates, field.currency);
+}
+
+function readValue(row, keys) {
+  if (!row) return "";
+  for (const key of keys) {
+    if (row[key] !== undefined && row[key] !== "") return row[key];
+  }
+  return "";
+}
+
+function toNumber(value) {
+  if (value === undefined || value === null) return 0;
+  const raw = String(value).trim();
+  if (!raw || raw === "--") return 0;
+
+  const negative = raw.startsWith("(") && raw.endsWith(")");
+  const cleaned = raw.replace(/[,$%\s()]/g, "");
+  const number = Number.parseFloat(cleaned);
+  if (Number.isNaN(number)) return 0;
+  return negative ? -number : number;
+}
+
+function parseDate(value) {
+  if (!value) return null;
+  const normalized = String(value).trim().replace(/\s+/g, " ");
+
+  const isoLike = normalized.match(
+    /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[,\sT]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/
+  );
+  if (isoLike) {
+    return buildLocalDate(isoLike[1], isoLike[2], isoLike[3], isoLike[4], isoLike[5], isoLike[6]);
+  }
+
+  const slashDate = normalized.match(
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/
+  );
+  if (slashDate) {
+    return buildLocalDate(slashDate[3], slashDate[1], slashDate[2], slashDate[4], slashDate[5], slashDate[6]);
+  }
+
+  const date = new Date(normalized.replace(/,/g, " "));
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function buildLocalDate(year, month, day, hour = 0, minute = 0, second = 0) {
+  const values = [year, month, day, hour || 0, minute || 0, second || 0].map(Number);
+  if (values.some((part) => !Number.isFinite(part))) return null;
+
+  const date = new Date(values[0], values[1] - 1, values[2], values[3], values[4], values[5]);
+  if (
+    date.getFullYear() !== values[0] ||
+    date.getMonth() !== values[1] - 1 ||
+    date.getDate() !== values[2]
+  ) {
+    return null;
+  }
+  return date;
+}
+
+function monthKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function dateKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
